@@ -7,9 +7,9 @@ class UserController extends BaseController {
     public function home() {
         if (isset($_GET['e'])) { $e = $this->GET('e'); }
         if($this->check()) {
-            $data = ['e' => isset($e)?$e:null,
+            $data = array('e' => isset($e)?$e:null,
             'userId'=>$_SESSION['user_id'],
-            'user'=>$_SESSION['username']];
+            'user'=>$_SESSION['username']);
             $this->view('WelcomeView', $data);
         }
     }
@@ -17,7 +17,7 @@ class UserController extends BaseController {
     public function register() {
         if (isset($_GET['e'])) {
             $e = $this->GET('e');
-            $this->view('RegistrationView', ['e'=>$e]);
+            $this->view('RegistrationView', array('e'=>$e));
             return;
         }
         $this->view('RegistrationView');
@@ -26,7 +26,7 @@ class UserController extends BaseController {
     public function login() {
         if (isset($_GET['e'])) {
             $e = $this->GET('e');
-            $this->view('LoginView', ['e'=>$e]);
+            $this->view('LoginView', array('e'=>$e));
             return;
         }
         $this->view('LoginView');
