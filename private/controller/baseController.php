@@ -11,7 +11,7 @@ class BaseController {
         include LOCATION . 'private/view/'. $view . '.php';
     }
 
-    public function GET($name=NULL, $value=false, $option=false) {
+    public function GET($name=NULL, $value=false) {
         $content=(!empty($_GET[$name]) ? trim($_GET[$name]) : (!empty($value) && !is_array($value) ? trim($value) : false));
         if(is_numeric($content))
             return preg_replace("@([^0-9])@Ui", "", $content);
@@ -35,7 +35,7 @@ class BaseController {
         else false;
     }
 
-    public function POST($name=NULL, $value=false, $option=false) {
+    public function POST($name=NULL, $value=false) {
         $content=(!empty($_POST[$name]) ? trim($_POST[$name]) : (!empty($value) && !is_array($value) ? trim($value) : false));
         if(is_numeric($content))
             return preg_replace("@([^0-9])@Ui", "", $content);

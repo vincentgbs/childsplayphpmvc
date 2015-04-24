@@ -2,18 +2,18 @@
 <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
-    <link rel="stylesheet" href='css/base.css'/>
-    <script type="text/javascript" src='js/base.js'></script>
+    <link rel="stylesheet" href='css/bootstrap.css'/>
+    <script type="text/javascript" src='js/jquery.js'></script>
 </head>
 <?php
-include_once 'config.php';
+require 'config.php';
 
 session_start();
 $start = microtime(true);
 
 if(DEBUG == 'ON') { echo "<pre>"; }
 else { error_reporting(0); }
-!isset($_GET['app'])?header('Location: ?app=Welcome'):null;
+!isset($_GET['app'])?header('Location: ?app='.DEFAULTAPP):null;
 $function = explode("/", $_GET['app']);
 foreach($function as &$word) { $word = preg_replace('/[^A-z]/', '', $word); }
 
