@@ -31,14 +31,20 @@ class BaseModel {
         return $result;
     }
 
-    public function selectAll($sql){
-        $result = mysqli_query($this->db, $sql);
+    public function selectRow($sql) {
+        $result = $this->db->query($sql);
         if($result == false) { return; }
-        mysqli_fetch_all($result, MYSQLI_ASSOC);
-        $return = array();
-        foreach($result as $row) { $return[] = $row; }
-        return $return;
+        return $result->fetch_array(MYSQLI_ASSOC);
     }
+
+//    public function selectAll($sql){
+//        $result = $this->db->query($sql);
+//        if($result == false) { return; }
+//        mysqli_fetch_all($result, MYSQLI_ASSOC);
+//        $return = array();
+//        foreach($result as $row) { $return[] = $row; }
+//        return $return;
+//    }
 
     public function checkExisting($tableName, $column, $param) {
         $query = "SELECT * FROM `".$tableName."` WHERE `".$column."` = ?";

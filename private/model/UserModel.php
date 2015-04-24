@@ -6,8 +6,8 @@ class UserModel extends BaseModel {
     public function uniqueActivation() {
         do {$activate = uniqid() . uniqid() . uniqid() . uniqid(); // semi-random string
             $sql = "SELECT * FROM temporary WHERE activate = '" . $activate ."';";
-            $rows = $this->selectAll($sql);
-        } while(count($rows) != 0);
+            $row = $this->selectRow($sql);
+        } while(count($row) != 0);
         return $activate;
     }
 
@@ -31,9 +31,9 @@ class UserModel extends BaseModel {
     public function checkActivate($activate) {
         $sql = "SELECT `username`, `email`, `password`, `salt` 
             FROM `temporary_users` WHERE `activate` = '$activate'";
-        $rows = $this->selectAll($sql);
-        if (count($rows) !== 1) { return false; }
-        return $rows[0];
+        $row = $this->selectRow($sql);
+        if (count($row) == 0) { return false; }
+        return $row;
     }
 
     public function insertVerified($data) {
@@ -58,7 +58,7 @@ class UserModel extends BaseModel {
             $sql .= " WHERE `email` = '$email' ";
         }
         $sql .=  "LIMIT 1";
-        return $this->selectAll($sql);
+        return $this->selectRow($sql);
     }
 
     public function loginAttempt($userId, $now, $success) {
@@ -70,10 +70,10 @@ class UserModel extends BaseModel {
     public function checkbrute($now, $userId, $timeLimit=360) {
         $valid_attempts = $now - $timeLimit;
 
-        $sql = "SELECT `time` FROM `login_attempts` 
+        $sql = "SELECT COUNT(`time`) AS attempt FROM `login_attempts` 
                 WHERE `user_id`='$userId' AND `success`='0' 
                 AND `time` > '$valid_attempts'";
-        return $this->selectAll($sql);
+        return $this->selectOne($sql);
         }
 
 }

@@ -106,20 +106,20 @@ class UserController extends BaseController {
             $email = strtolower($this->POST('email'));
             $password = $this->POST('p');
 
-            $rows = $this->uModel->checkLogin(null, $email);
-            if(empty($rows)) {
+            $row = $this->uModel->checkLogin(null, $email);
+            if(!isset($row)) {
                 header('Location: ?app=User/Login&e=email%20not%20found');
                 return;
             }
 
             $now = time();
-            $userId = $rows[0]['user_id'];
-            $username = $rows[0]['username'];
-            $dbPassword = $rows[0]['password'];
+            $userId = $row['user_id'];
+            $username = $row['username'];
+            $dbPassword = $row['password'];
 
-            $password = hash('sha512', $password . $rows[0]['salt']);
+            $password = hash('sha512', $password . $row['salt']);
             $check = $this->uModel->checkbrute($now, $userId);
-            if (count($check) >= 5) {
+            if ($check['attempt'] >= 5) {
                 // send email to "unlock locked account"
                 header('Location: ?app=User/Login&e=too%20many%20login%20attempts');
                 return;
@@ -158,10 +158,10 @@ class UserController extends BaseController {
 
             $userBrowser = $_SERVER['HTTP_USER_AGENT'];
 
-            $rows = $this->uModel->checkLogin($userId);
-            if(count($rows) == 1) {
-                $password = $rows[0]['password'];
-                $username = $rows[0]['username'];
+            $row = $this->uModel->checkLogin($userId);
+            if(count($row) != 0) {
+                $password = $row['password'];
+                $username = $row['username'];
                 $loginCheck = hash('sha512', $password . $userBrowser);
 
                 if ($loginCheck == $loginString) {
