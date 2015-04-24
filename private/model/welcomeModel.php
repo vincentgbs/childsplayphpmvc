@@ -1,5 +1,5 @@
 <?php
-include 'baseModel.php';
+include 'BaseModel.php';
 
 class WelcomeModel extends BaseModel {
 

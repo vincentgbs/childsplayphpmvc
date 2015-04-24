@@ -1,5 +1,5 @@
 <?php
-include 'baseController.php';
+include 'BaseController.php';
 
 class WelcomeController extends BaseController {
 

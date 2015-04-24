@@ -13,7 +13,7 @@ $start = microtime(true);
 
 if(DEBUG == 'ON') { echo "<pre>"; }
 else { error_reporting(0); }
-!isset($_GET['app'])?header('Location: ?app=welcome'):null;
+!isset($_GET['app'])?header('Location: ?app=Welcome'):null;
 $function = explode("/", $_GET['app']);
 foreach($function as &$word) { $word = preg_replace('/[^A-z]/', '', $word); }
 
