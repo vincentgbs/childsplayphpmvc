@@ -37,14 +37,14 @@ class BaseModel {
         return $result->fetch_array(MYSQLI_ASSOC);
     }
 
-//    public function selectAll($sql){
-//        $result = $this->db->query($sql);
-//        if($result == false) { return; }
-//        mysqli_fetch_all($result, MYSQLI_ASSOC);
-//        $return = array();
-//        foreach($result as $row) { $return[] = $row; }
-//        return $return;
-//    }
+    public function selectAll($sql){
+        $result = $this->db->query($sql);
+        if($result == false) { return; }
+        $return = array();
+        foreach(range(1, $result->num_rows) as $row)
+        { $return[] = $result->fetch_array(MYSQLI_ASSOC); }
+        return $return;
+    }
 
     public function checkExisting($tableName, $column, $param) {
         $query = "SELECT * FROM `".$tableName."` WHERE `".$column."` = ?";
