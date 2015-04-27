@@ -4,6 +4,10 @@
     <meta content="utf-8" http-equiv="encoding">
     <link rel="stylesheet" href='css/bootstrap.css'/>
     <script type="text/javascript" src='js/jquery.js'></script>
+    <script type="text/javascript" src='js/bootstrap.js'></script>
+    <script type="text/javascript" src='js/jqueryui.js'></script>
+    <link rel="stylesheet" href='css/jqueryui.css'/>
+    <script type="text/javascript" src='js/jquery.validate.js'></script>
 </head>
 <?php
 require 'config.php';
